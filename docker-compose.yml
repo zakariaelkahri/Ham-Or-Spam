@@ -1,0 +1,39 @@
+services:
+
+
+
+  # PySpark + Streamlit
+  # streamlit:
+  #   build: .
+  #   container_name: streamlit_app
+  ## depends_on:
+  #   ports:
+  #     - "8501:8501"
+  #   environment:
+  #     MONGO_URI: mongodb://mongo:27017
+  #     AIRFLOW_URL: http://airflow:8080
+  #   volumes:
+  #     - ./app/notebooks/app.py:/app/app.py          # map your Streamlit app
+  #     - ./app/notebooks/models:/app/models   
+
+  # Jupyter Lab with PySpark and Hadoop
+  jupyter:
+    build:
+      context: ./app/notebooks
+      dockerfile: jupyter.Dockerfile
+    container_name: jupyter_ham_or_spam
+    # depends_on:
+    ports:
+      - "8889:8888"
+
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+      # MONGO_URI: mongodb://mongo:27017
+      GRANT_SUDO: "yes"
+      JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
+      SPARK_HOME: /usr/local/spark
+      HADOOP_HOME: /opt/hadoop
+      HADOOP_CONF_DIR: /opt/hadoop/etc/hadoop
+    volumes:
+      - ./app/notebooks:/home/jovyan/work
+      - ./app/DataSetEmails:/home/jovyan/data
