@@ -3,18 +3,18 @@ services:
 
 
   # PySpark + Streamlit
-  # streamlit:
-  #   build: .
-  #   container_name: streamlit_app
-  ## depends_on:
-  #   ports:
-  #     - "8501:8501"
-  #   environment:
-  #     MONGO_URI: mongodb://mongo:27017
-  #     AIRFLOW_URL: http://airflow:8080
-  #   volumes:
-  #     - ./app/notebooks/app.py:/app/app.py          # map your Streamlit app
-  #     - ./app/notebooks/models:/app/models   
+  streamlit:
+    build: .
+    container_name: streamlit1
+  # depends_on:
+    ports:
+      - "8501:8501"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      AIRFLOW_URL: http://airflow:8080
+    volumes:
+      - ./app/notebooks/app.py:/app/app.py          # map your Streamlit app
+      - ./app/notebooks/models:/app/models   
 
   # Jupyter Lab with PySpark and Hadoop
   jupyter:
